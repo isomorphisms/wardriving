@@ -6,7 +6,19 @@
 
 `prototype/` contains an AOSP scan-output filter in POSIX `awk`, a Shizuku `rish` launcher, and a Termux installer. It is executable as source: **no Clang, GCC, ICK, Gradle, or other compiler is installed or invoked on the phone.** The scripts remain in the repository as a diagnostic fallback after the native application exists.
 
-On the MIRO C67, the intended setup is Termux + Shizuku's authorized `rish` shell. Download/extract the repository, then run from inside the `prototype` directory:
+On the MIRO C67, the intended setup is Termux + Shizuku's authorized `rish` shell. Android's shared `/storage/emulated/0` is not an executable location: **copy**, do not symlink, the Shizuku exports to Termux private storage. The following commands match a Shizuku export in `~/Opt`:
+
+```sh
+mkdir -p ~/opt
+rm -f ~/opt/rish ~/opt/rish_shizuku.dex
+cp -L ~/Opt/rish ~/Opt/rish_shizuku.dex ~/opt/
+sed -i 's/PKG/com.termux/g' ~/opt/rish
+chmod 700 ~/opt/rish
+chmod 400 ~/opt/rish_shizuku.dex
+RISH_APPLICATION_ID=com.termux ~/opt/rish -c 'id'
+```
+
+With Shizuku running and Termux authorized, the expected output includes `uid=2000(shell)`. The `rish_shizuku.dex` file must be non-writable for Android 14. If the exported `rish` script has a placeholder `PKG`, it must be set to `com.termux` as above. Download/extract the repository, then run from inside the `prototype` directory:
 
 ```sh
 sh install-termux.sh
