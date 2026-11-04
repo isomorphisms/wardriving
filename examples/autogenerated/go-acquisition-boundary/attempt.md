@@ -49,3 +49,24 @@ network binding and physical C67 execution remain NOT_RUN until exercised.
 Toolchain: official go1.27.3 linux-amd64 archive, SHA256
 `65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40`.
 Results and the chosen architecture will be recorded in docs/go-acquisition/.
+
+## Result
+
+Host protocol/cancellation tests, original scanner fixtures, vet and the
+loopback benchmark ran successfully. The Android-specific read-only executable
+cross-compiles without cgo; it does not use Go DNS or prove Android networking.
+
+Exact-code hosted run 41753953052 at
+`ff83e51d1e02e6b5f3a28959cd0f6f81f7961ecc` passes the host C-to-Go ABI observer,
+race detector and Android API34 ARM64 Go shared-library link/export checks.
+The local tested source tree and remote code tree are identical
+(`b96adeb289573a72792f60126fdd784d76d899f0`). The CLI push transport lacked
+credentials; the connected repository write published the same verified tree.
+
+No compiler gap was found in Android-NDK's generic native framework-class
+writer. Its separate Activity directive parser is narrower and must not be
+misidentified as the whole compiler. No compiler/language change is justified.
+The missing production work is framework/Go integration plus cancellable
+per-Network DNS/socket implementation and its runtime qualification, not a
+reason to replace the chosen language. See docs/go-acquisition/decision.md and
+implementation-jobs.md for exact obligations. Physical C67 remains NOT_RUN.

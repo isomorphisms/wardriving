@@ -36,10 +36,16 @@ Status: the filter is host-tested against synthetic rows modeled on AOSP's exact
 - Treat passwordless as *no advertised Wi-Fi password*, not permission, Internet connectivity, or absence of a captive portal.
 - Require an explicit user choice to join. Do not bypass captive-portal terms or connect to untrusted networks automatically.
 - No telemetry, location history, packet capture, or network probing in the initial slice.
-- No builds on the phone. For the native app, compile **off-device with ICK**, and use the existing Idriç/Android-NDK integration where appropriate. Do not claim ICK Android executable/APK qualification before the relevant runtime and package gates pass.
+- No builds on the phone. The selected acquisition engine uses **Go, compiled off-device**, with narrow adapters through the existing Idriç/Android-NDK integration. ICK applies to owned C adapters where qualified, not Go compilation. Runtime and APK gates remain separate.
 - No first-party Java/Kotlin code. Android's framework APIs can be accessed through JNI in a native APK.
 
 ## Tests
+
+The [Go acquisition investigation](docs/go-acquisition/decision.md) records
+protocol decisions, host experiments, Android ARM64 link checks and
+[implementation handoffs](docs/go-acquisition/implementation-jobs.md). It
+preserves this scout and does not yet deliver a working acquisition app or APK.
+Physical C67 network/runtime acceptance remains NOT_RUN.
 
 On a development host with `python3` and `awk`:
 

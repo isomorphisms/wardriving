@@ -8,7 +8,7 @@ The AOSP output is fixed-width but permits per-radio-chain RSSI suffixes, UTF-8 
 
 ## Stage B — native UI
 
-Use a native C core compiled off-device with ICK when the Android runtime and executable boundaries are qualified. Use existing Idric and Android-NDK integrations where appropriate. Do not install any compiler on the phone or introduce first-party Java/Kotlin. A native Activity with JNI to WifiManager can request scans and consume callbacks. Handle Location and Wi-Fi permission denial.
+The user has selected a Go acquisition engine compiled off-device with a pinned Go toolchain. Use the existing typed Android-NDK framework/JNI boundary for narrow adapters; ICK applies to owned C where qualified, not to Go compilation. Do not install any compiler on the phone or introduce first-party Java/Kotlin. The [Go acquisition decision](go-acquisition/decision.md) records the source investigation, executable experiments, evidence limits and [bounded implementation jobs](go-acquisition/implementation-jobs.md). This branch does not yet provide the finished app or an APK.
 
 Show ranked SSIDs, security, BSSID, frequency, signal and age in a short list with large touch targets. Android network suggestions and request APIs have user-approval and routing restrictions; do not claim that Shizuku alone can silently force system-wide network association.
 
